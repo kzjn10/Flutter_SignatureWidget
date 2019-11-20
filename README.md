@@ -2,6 +2,7 @@
 
 Signature widget library
 
+![Preview](https://github.com/kzjn10/Flutter_SignatureWidget/blob/master/graphic/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-20%20at%2014.36.07.png?raw=true)
 
 **Usage**
 
