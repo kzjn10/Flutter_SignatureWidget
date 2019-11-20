@@ -28,7 +28,8 @@ class SignaturePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SignaturePainter oldDelegate) => oldDelegate.points != points;
+  bool shouldRepaint(SignaturePainter oldDelegate) =>
+      oldDelegate.points != points;
 
   Future<Uint8List> export() async {
     var recorder = PictureRecorder();

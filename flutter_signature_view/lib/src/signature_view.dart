@@ -16,7 +16,11 @@ class SignatureView extends StatefulWidget {
 
   final GlobalKey<_SignatureViewState> key = GlobalKey<_SignatureViewState>();
 
-  SignatureView({this.backgroundColor = Colors.white, this.data, this.penStyle, this.onSigned});
+  SignatureView(
+      {this.backgroundColor = Colors.white,
+      this.data,
+      this.penStyle,
+      this.onSigned});
 
   @override
   _SignatureViewState createState() => _SignatureViewState();
@@ -87,9 +91,14 @@ class _SignatureViewState extends State<SignatureView> {
           child: GestureDetector(
             onPanUpdate: (DragUpdateDetails details) {
               RenderBox object = context.findRenderObject();
-              Offset _localPosition = object.globalToLocal(details.globalPosition);
-              if ((constraints.maxWidth == null || _localPosition.dx > 0 && _localPosition.dx < constraints.maxWidth) &&
-                  (constraints.maxHeight == null || _localPosition.dy > 0 && _localPosition.dy < constraints.maxHeight)) {
+              Offset _localPosition =
+                  object.globalToLocal(details.globalPosition);
+              if ((constraints.maxWidth == null ||
+                      _localPosition.dx > 0 &&
+                          _localPosition.dx < constraints.maxWidth) &&
+                  (constraints.maxHeight == null ||
+                      _localPosition.dy > 0 &&
+                          _localPosition.dy < constraints.maxHeight)) {
                 setState(() {
                   _points = new List.from(_points)..add(_localPosition);
                 });

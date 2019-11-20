@@ -38,7 +38,8 @@ class OffsetUtil {
         } else {
           List<String> offsetValues = item.split(",");
           if (offsetValues != null && offsetValues.length == 2) {
-            result.add(Offset(double.parse(offsetValues[0]), double.parse(offsetValues[1])));
+            result.add(Offset(
+                double.parse(offsetValues[0]), double.parse(offsetValues[1])));
           }
         }
       }
