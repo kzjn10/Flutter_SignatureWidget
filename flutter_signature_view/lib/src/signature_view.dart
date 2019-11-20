@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'offset_util.dart';
 import 'signature_painter.dart';
 
+/// Signature widget view
 class SignatureView extends StatefulWidget {
   final String data;
 
@@ -16,11 +17,7 @@ class SignatureView extends StatefulWidget {
 
   final GlobalKey<_SignatureViewState> key = GlobalKey<_SignatureViewState>();
 
-  SignatureView(
-      {this.backgroundColor = Colors.white,
-      this.data,
-      this.penStyle,
-      this.onSigned});
+  SignatureView({this.backgroundColor = Colors.white, this.data, this.penStyle, this.onSigned});
 
   @override
   _SignatureViewState createState() => _SignatureViewState();
@@ -41,7 +38,7 @@ class SignatureView extends StatefulWidget {
   }
 
   /// Clear signature view
-  clear() {
+  void clear() {
     return key.currentState.clear();
   }
 }
@@ -89,22 +86,17 @@ class _SignatureViewState extends State<SignatureView> {
           width: constraints.maxWidth,
           height: constraints.maxHeight,
           child: GestureDetector(
-            onPanUpdate: (DragUpdateDetails details) {
+            onPanUpdate: (details) {
               RenderBox object = context.findRenderObject();
-              Offset _localPosition =
-                  object.globalToLocal(details.globalPosition);
-              if ((constraints.maxWidth == null ||
-                      _localPosition.dx > 0 &&
-                          _localPosition.dx < constraints.maxWidth) &&
-                  (constraints.maxHeight == null ||
-                      _localPosition.dy > 0 &&
-                          _localPosition.dy < constraints.maxHeight)) {
+              Offset _localPosition = object.globalToLocal(details.globalPosition);
+              if ((constraints.maxWidth == null || _localPosition.dx > 0 && _localPosition.dx < constraints.maxWidth) &&
+                  (constraints.maxHeight == null || _localPosition.dy > 0 && _localPosition.dy < constraints.maxHeight)) {
                 setState(() {
                   _points = new List.from(_points)..add(_localPosition);
                 });
               }
             },
-            onPanEnd: (DragEndDetails details) {
+            onPanEnd: (details) {
               _points.add(null);
               if (widget.onSigned != null) {
                 widget.onSigned(OffsetUtil.convertListOffsetToString(_points));

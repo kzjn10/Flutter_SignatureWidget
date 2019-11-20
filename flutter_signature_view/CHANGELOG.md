@@ -1,3 +1,7 @@
+## [1.0.1] - Add analysis
+
+* Add analysis
+
 ## [1.0.0] - Official release
 
 * Official release plugin. Have fun.
