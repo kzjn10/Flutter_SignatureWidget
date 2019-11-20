@@ -1,3 +1,8 @@
+## [1.0.0] - Official release
+
+* Official release plugin. Have fun.
+
+
 ## [0.0.3] - First release
 
 * Update docs to get more scores
