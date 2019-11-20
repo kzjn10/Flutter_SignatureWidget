@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.print),
               onPressed: () {
                 try {
+                  _signatureView.isEmpty;
                   _signatureView.exportBytes().then((value) {
                     setState(() {
                       _value = value;

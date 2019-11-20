@@ -36,11 +36,6 @@ class SignatureView extends StatefulWidget {
     return key.currentState.isEmpty();
   }
 
-  /// Check is not empty
-  bool get isNotEmpty {
-    return !key.currentState.isEmpty();
-  }
-
   /// Clear signature view
   clear() {
     return key.currentState.clear();
@@ -102,7 +97,9 @@ class _SignatureViewState extends State<SignatureView> {
             },
             onPanEnd: (DragEndDetails details) {
               _points.add(null);
-              widget.onSigned(OffsetUtil.convertListOffsetToString(_points));
+              if (widget.onSigned != null) {
+                widget.onSigned(OffsetUtil.convertListOffsetToString(_points));
+              }
               return _points;
             },
             child: CustomPaint(
