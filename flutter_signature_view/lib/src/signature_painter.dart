@@ -3,11 +3,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+/// Signature painter
 class SignaturePainter extends CustomPainter {
+  /// Default point value
   List<Offset> points;
+
+  /// Paint style
   Paint paintStyle;
   Size _canvasSize;
 
+  /// Constructor
   SignaturePainter({this.points, this.paintStyle});
 
   @override
@@ -20,7 +25,7 @@ class SignaturePainter extends CustomPainter {
         ..strokeWidth = 5.0;
     }
 
-    for (int i = 0; i < points.length - 1; i++) {
+    for (var i = 0; i < points.length - 1; i++) {
       if (points[i] != null && points[i + 1] != null) {
         canvas.drawLine(points[i], points[i + 1], paintStyle);
       }
@@ -28,9 +33,11 @@ class SignaturePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(SignaturePainter oldDelegate) =>
-      oldDelegate.points != points;
+  bool shouldRepaint(SignaturePainter oldDelegate) {
+    return oldDelegate.points != points;
+  }
 
+  /// Export canvas to Uint8List
   Future<Uint8List> export() async {
     var recorder = PictureRecorder();
     var origin = Offset(0.0, 0.0);

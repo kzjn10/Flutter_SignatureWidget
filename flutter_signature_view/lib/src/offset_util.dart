@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// Utils class using parse list offset
 class OffsetUtil {
+  /// Convert List offset to String
   static String convertListOffsetToString(List<Offset> signatureValue) {
-    StringBuffer result = StringBuffer();
+    var result = StringBuffer();
 
     if (signatureValue == null || signatureValue.length == 0) {
       return "";
@@ -23,23 +25,24 @@ class OffsetUtil {
     return result.toString();
   }
 
+  /// Convert List offset (String format) to List<Offset> data
   static List<Offset> covertStringToListOffset(String value) {
-    List<Offset> result = List();
+    var result = <Offset>[];
 
     if (value == null || value.trim().length == 0) {
       return result;
     }
 
-    List<String> offsetList = value.split("|");
+    var offsetList = value.split("|");
     if (offsetList != null && offsetList.length != 0) {
       for (var item in offsetList) {
         if (item == "null") {
           result.add(null);
         } else {
-          List<String> offsetValues = item.split(",");
-          if (offsetValues != null && offsetValues.length == 2) {
-            result.add(Offset(
-                double.parse(offsetValues[0]), double.parse(offsetValues[1])));
+          var temp = item.split(",");
+          if (temp != null && temp.length == 2) {
+            var offset = Offset(double.parse(temp[0]), double.parse(temp[1]));
+            result.add(offset);
           }
         }
       }

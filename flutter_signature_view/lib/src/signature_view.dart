@@ -2,22 +2,32 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+import 'custom_pan_gesture_recognizer.dart';
 import 'offset_util.dart';
 import 'signature_painter.dart';
 
 /// Signature widget view
 class SignatureView extends StatefulWidget {
+  /// Default data
   final String data;
 
+  /// Canvas background color
   final Color backgroundColor;
 
+  /// Custom paint
   final Paint penStyle;
 
+  /// Callback when signed
   final Function(String) onSigned;
 
   final GlobalKey<_SignatureViewState> key = GlobalKey<_SignatureViewState>();
 
-  SignatureView({this.backgroundColor = Colors.white, this.data, this.penStyle, this.onSigned});
+  /// Constructor
+  SignatureView(
+      {this.backgroundColor = Colors.white,
+      this.data,
+      this.penStyle,
+      this.onSigned});
 
   @override
   _SignatureViewState createState() => _SignatureViewState();
@@ -47,6 +57,7 @@ class _SignatureViewState extends State<SignatureView> {
   List<Offset> _points;
   SignaturePainter _painter;
   GlobalKey _painterKey;
+  BoxConstraints _constraints;
 
   bool isEmpty() {
     return _points?.isEmpty ?? true;
@@ -70,9 +81,9 @@ class _SignatureViewState extends State<SignatureView> {
     super.initState();
     _painterKey = GlobalKey();
     if (widget.data != null) {
-      _points = OffsetUtil.covertStringToListOffset(widget.data) ?? List();
+      _points = OffsetUtil.covertStringToListOffset(widget.data) ?? [];
     } else {
-      _points = List();
+      _points = [];
     }
   }
 
@@ -81,27 +92,22 @@ class _SignatureViewState extends State<SignatureView> {
     _painter = SignaturePainter(points: _points, paintStyle: widget.penStyle);
     return LayoutBuilder(
       builder: (context, constraints) {
+        _constraints = constraints;
         return Container(
           color: widget.backgroundColor,
           width: constraints.maxWidth,
           height: constraints.maxHeight,
-          child: GestureDetector(
-            onPanUpdate: (details) {
-              RenderBox object = context.findRenderObject();
-              Offset _localPosition = object.globalToLocal(details.globalPosition);
-              if ((constraints.maxWidth == null || _localPosition.dx > 0 && _localPosition.dx < constraints.maxWidth) &&
-                  (constraints.maxHeight == null || _localPosition.dy > 0 && _localPosition.dy < constraints.maxHeight)) {
-                setState(() {
-                  _points = new List.from(_points)..add(_localPosition);
-                });
-              }
-            },
-            onPanEnd: (details) {
-              _points.add(null);
-              if (widget.onSigned != null) {
-                widget.onSigned(OffsetUtil.convertListOffsetToString(_points));
-              }
-              return _points;
+          child: RawGestureDetector(
+            gestures: <Type, GestureRecognizerFactory>{
+              CustomPanGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  CustomPanGestureRecognizer>(
+                () => CustomPanGestureRecognizer(
+                  onPanDown: _onPanDown,
+                  onPanUpdate: _onPanUpdate,
+                  onPanEnd: _onPanEnd,
+                ),
+                (instance) {},
+              ),
             },
             child: CustomPaint(
               key: _painterKey,
@@ -112,5 +118,41 @@ class _SignatureViewState extends State<SignatureView> {
         );
       },
     );
+  }
+
+  bool _onPanDown(Offset details) {
+    return true;
+  }
+
+  bool _onPanUpdate(Offset details) {
+    if (_painter == null) {
+      return false;
+    }
+
+    RenderBox renderBox = context.findRenderObject();
+    var position = renderBox.globalToLocal(details);
+
+    if (position == null || _constraints == null) {
+      return false;
+    }
+
+    if ((position.dx > 0 && position.dx < _constraints.maxWidth) &&
+        (_constraints.maxHeight == null ||
+            position.dy > 0 && position.dy < _constraints.maxHeight)) {
+      setState(() {
+        _points = List.from(_points)..add(position);
+      });
+    }
+
+    return true;
+  }
+
+  bool _onPanEnd(Offset details) {
+    _points.add(null);
+    if (widget.onSigned != null) {
+      widget.onSigned(OffsetUtil.convertListOffsetToString(_points));
+    }
+
+    return true;
   }
 }

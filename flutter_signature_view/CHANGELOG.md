@@ -1,3 +1,7 @@
+## [1.1.0]
+
+* (Fix bug) Can not draw vertical when put widget inside scrollview.
+
 ## [1.0.1] - Add analysis
 
 * Add analysis

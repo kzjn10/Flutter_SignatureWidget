@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signature_view/signature_view.dart';
+import 'package:flutter_signature_view/flutter_signature_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -62,24 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
               })
         ],
       ),
-      body: Container(
-          child: Column(
-        children: <Widget>[
-          Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * .3,
-              child: Container(
-                child: Center(
-                  child: _value != null ? Image.memory(_value) : Container(),
-                ),
-              )),
-          Container(
-            width: 330,
-            height: 330,
-            child: _signatureView,
-          )
-        ],
-      )),
+      body: SingleChildScrollView(
+        child: Container(
+            child: Column(
+          children: <Widget>[
+            Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * .8,
+                child: Container(
+                  child: Center(
+                    child: _value != null ? Image.memory(_value) : Container(),
+                  ),
+                )),
+            Container(
+              width: 330,
+              height: 330,
+              child: _signatureView,
+            )
+          ],
+        )),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _clear,
         tooltip: 'Clear',
