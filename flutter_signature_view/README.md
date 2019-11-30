@@ -1,6 +1,5 @@
 ## Signature Widget library
 
-Signature widget library
 
 [![pub](https://img.shields.io/pub/v/flutter_vector_icons.svg)](https://pub.dev/packages/flutter_signature_view)
 
