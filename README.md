@@ -6,6 +6,23 @@ Signature widget library
 
 ![Preview](https://github.com/kzjn10/Flutter_SignatureWidget/blob/master/graphic/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-20%20at%2014.36.07.png?raw=true)
 
+**Installing**
+
+You should add the following to your `pubspec.yaml` file:
+
+
+`dependencies:
+   flutter_signature_view: ^1.1.0`
+
+Note: If you're using the Flutter `master` channel, if you encounter build issues, or want to try the latest and greatest then you should use the `master` branch and not a specific release version. To do so, use the following configuration in your `pubspec.yaml`:
+
+`dependencies:
+  flutter_signature_view:
+    git:
+      url: git://github.com:kzjn10/Flutter_SignatureWidget.git`
+      
+After adding the dependency to your `pubspec.yaml` you can run: flutter packages get or update your packages using your IDE.
+
 **Usage**
 
   Simple init `SignatureView`
