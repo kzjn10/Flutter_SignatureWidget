@@ -11,15 +11,15 @@ Signature widget library
 You should add the following to your `pubspec.yaml` file:
 
 
-`dependencies:
-   flutter_signature_view: ^1.1.0`
+    dependencies:
+       flutter_signature_view: ^1.1.0
 
 Note: If you're using the Flutter `master` channel, if you encounter build issues, or want to try the latest and greatest then you should use the `master` branch and not a specific release version. To do so, use the following configuration in your `pubspec.yaml`:
 
-`dependencies:
-  flutter_signature_view:
-    git:
-      url: git://github.com:kzjn10/Flutter_SignatureWidget.git`
+    dependencies:
+      flutter_signature_view:
+        git:
+          url: git://github.com:kzjn10/Flutter_SignatureWidget.git
       
 After adding the dependency to your `pubspec.yaml` you can run: flutter packages get or update your packages using your IDE.
 
