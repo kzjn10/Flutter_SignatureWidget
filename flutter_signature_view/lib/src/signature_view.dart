@@ -23,11 +23,12 @@ class SignatureView extends StatefulWidget {
   final GlobalKey<_SignatureViewState> key = GlobalKey<_SignatureViewState>();
 
   /// Constructor
-  SignatureView(
-      {this.backgroundColor = Colors.white,
-      this.data,
-      this.penStyle,
-      this.onSigned});
+  SignatureView({
+    this.backgroundColor = Colors.white,
+    this.data,
+    this.penStyle,
+    this.onSigned,
+  });
 
   @override
   _SignatureViewState createState() => _SignatureViewState();
@@ -35,6 +36,11 @@ class SignatureView extends StatefulWidget {
   /// Export list offset to bytes
   Future<Uint8List> exportBytes() async {
     return await key.currentState.exportBytes();
+  }
+
+  /// Export list offset to bytes
+  Future<String> exportBase64Image() async {
+    return await key.currentState.exportBase64Image();
   }
 
   /// Export list offset to string
@@ -65,6 +71,10 @@ class _SignatureViewState extends State<SignatureView> {
 
   Future<Uint8List> exportBytes() async {
     return await _painter.export();
+  }
+
+  Future<String> exportBase64Image() async {
+    return await _painter.exportBase64Image();
   }
 
   String exportListOffsetToString() {
@@ -99,8 +109,7 @@ class _SignatureViewState extends State<SignatureView> {
           height: constraints.maxHeight,
           child: RawGestureDetector(
             gestures: <Type, GestureRecognizerFactory>{
-              CustomPanGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-                  CustomPanGestureRecognizer>(
+              CustomPanGestureRecognizer: GestureRecognizerFactoryWithHandlers<CustomPanGestureRecognizer>(
                 () => CustomPanGestureRecognizer(
                   onPanDown: _onPanDown,
                   onPanUpdate: _onPanUpdate,
@@ -136,9 +145,7 @@ class _SignatureViewState extends State<SignatureView> {
       return false;
     }
 
-    if ((position.dx > 0 && position.dx < _constraints.maxWidth) &&
-        (_constraints.maxHeight == null ||
-            position.dy > 0 && position.dy < _constraints.maxHeight)) {
+    if ((position.dx > 0 && position.dx < _constraints.maxWidth) && (_constraints.maxHeight == null || position.dy > 0 && position.dy < _constraints.maxHeight)) {
       setState(() {
         _points = List.from(_points)..add(position);
       });

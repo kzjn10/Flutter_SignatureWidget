@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -54,5 +55,11 @@ class SignaturePainter extends CustomPainter {
     ));
     var bytes = await image.toByteData(format: ImageByteFormat.png);
     return bytes.buffer.asUint8List();
+  }
+
+  /// Export canvas to Base64Image
+  Future<String> exportBase64Image() async {
+    var bytes = await export();
+    return "data:image/png;base64,${base64.encode(bytes)}";
   }
 }

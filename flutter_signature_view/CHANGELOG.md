@@ -1,3 +1,7 @@
+## [1.1.1]
+
+* Support export to base64 String
+
 ## [1.1.0]
 
 * (Fix bug) Can not draw vertical when put widget inside scrollview.

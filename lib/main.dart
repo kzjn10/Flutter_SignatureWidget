@@ -54,7 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   _signatureView.exportBytes().then((value) {
                     setState(() {
                       _value = value;
+                      print("value: $value");
                     });
+                  });
+
+                  _signatureView.exportBase64Image().then((value) {
+                    print("Value: $value");
                   });
                 } catch (e) {
                   print(e.toString());

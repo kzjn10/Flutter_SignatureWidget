@@ -12,7 +12,7 @@ You should add the following to your `pubspec.yaml` file:
 
 
     dependencies:
-       flutter_signature_view: ^1.1.0
+       flutter_signature_view: ^1.1.1
 
 Note: If you're using the Flutter `master` channel, if you encounter build issues, or want to try the latest and greatest then you should use the `master` branch and not a specific release version. To do so, use the following configuration in your `pubspec.yaml`:
 
@@ -53,6 +53,7 @@ Init with optional params
 
  - Get list offset as string value `_signatureView.exportListOffsetToString()`
  - Get data as `Bytes` `_signatureView.exportBytes()` -> `async` function
+ - Get base64 String ` _signatureView.exportBase64Image()` -> `async` function
  - Check empty `_signatureView.isEmpty`
  - Clear current signature `_signatureView.clear()`
 
