@@ -9,18 +9,19 @@ import 'signature_painter.dart';
 /// Signature widget view
 class SignatureView extends StatefulWidget {
   /// Default data
-  final String data;
+  final String? data;
 
   /// Canvas background color
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Custom paint
-  final Paint penStyle;
+  final Paint? penStyle;
 
   /// Callback when signed
-  final Function(String) onSigned;
+  final Function(String)? onSigned;
 
-  final GlobalKey<_SignatureViewState> key = GlobalKey<_SignatureViewState>();
+  @override
+  final GlobalKey<_SignatureViewState> key = GlobalKey();
 
   /// Constructor
   SignatureView({
@@ -34,56 +35,58 @@ class SignatureView extends StatefulWidget {
   _SignatureViewState createState() => _SignatureViewState();
 
   /// Export list offset to bytes
-  Future<Uint8List> exportBytes() async {
-    return await key.currentState.exportBytes();
+  Future<Uint8List?> exportBytes() {
+    return key.currentState!.exportBytes();
   }
 
   /// Export list offset to bytes
-  Future<String> exportBase64Image() async {
-    return await key.currentState.exportBase64Image();
+  Future<String?> exportBase64Image() {
+    return key.currentState!.exportBase64Image();
   }
 
   /// Export list offset to string
-  String exportListOffsetToString() {
-    return key.currentState.exportListOffsetToString();
+  String? exportListOffsetToString() {
+    return key.currentState!.exportListOffsetToString();
   }
 
   /// Check empty
   bool get isEmpty {
-    return key.currentState.isEmpty();
+    return key.currentState?.isEmpty() ?? true;
   }
 
   /// Clear signature view
   void clear() {
-    return key.currentState.clear();
+    return key.currentState?.clear();
   }
 }
 
 class _SignatureViewState extends State<SignatureView> {
-  List<Offset> _points;
-  SignaturePainter _painter;
-  GlobalKey _painterKey;
-  BoxConstraints _constraints;
+  List<Offset?>? _points;
+  SignaturePainter? _painter;
+  late GlobalKey _painterKey;
+  late BoxConstraints _constraints;
 
   bool isEmpty() {
     return _points?.isEmpty ?? true;
   }
 
-  Future<Uint8List> exportBytes() async {
-    return await _painter.export();
+  Future<Uint8List?> exportBytes() async {
+    return _painter?.export();
   }
 
-  Future<String> exportBase64Image() async {
-    return await _painter.exportBase64Image();
+  Future<String?> exportBase64Image() async {
+    return _painter?.exportBase64Image();
   }
 
-  String exportListOffsetToString() {
-    return OffsetUtil.convertListOffsetToString(_points);
+  String? exportListOffsetToString() {
+    return OffsetUtil.convertListOffsetToString(_points ?? List.empty());
   }
 
   void clear() {
-    setState(() => _points.clear());
-    if (widget.onSigned != null) widget.onSigned("");
+    setState(() => _points?.clear());
+    if (widget.onSigned != null) {
+      widget.onSigned!('');
+    }
   }
 
   @override
@@ -91,7 +94,7 @@ class _SignatureViewState extends State<SignatureView> {
     super.initState();
     _painterKey = GlobalKey();
     if (widget.data != null) {
-      _points = OffsetUtil.covertStringToListOffset(widget.data) ?? [];
+      _points = OffsetUtil.covertStringToListOffset(widget.data!);
     } else {
       _points = [];
     }
@@ -109,7 +112,8 @@ class _SignatureViewState extends State<SignatureView> {
           height: constraints.maxHeight,
           child: RawGestureDetector(
             gestures: <Type, GestureRecognizerFactory>{
-              CustomPanGestureRecognizer: GestureRecognizerFactoryWithHandlers<CustomPanGestureRecognizer>(
+              CustomPanGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  CustomPanGestureRecognizer>(
                 () => CustomPanGestureRecognizer(
                   onPanDown: _onPanDown,
                   onPanUpdate: _onPanUpdate,
@@ -138,16 +142,17 @@ class _SignatureViewState extends State<SignatureView> {
       return false;
     }
 
-    RenderBox renderBox = context.findRenderObject();
-    var position = renderBox.globalToLocal(details);
+    final RenderBox? renderBox = context.findRenderObject() as RenderBox?;
+    final position = renderBox?.globalToLocal(details);
 
-    if (position == null || _constraints == null) {
+    if (position == null) {
       return false;
     }
 
-    if ((position.dx > 0 && position.dx < _constraints.maxWidth) && (_constraints.maxHeight == null || position.dy > 0 && position.dy < _constraints.maxHeight)) {
+    if ((position.dx > 0 && position.dx < _constraints.maxWidth) &&
+        (position.dy > 0 && position.dy < _constraints.maxHeight)) {
       setState(() {
-        _points = List.from(_points)..add(position);
+        _points = List.from(_points!)..add(position);
       });
     }
 
@@ -155,9 +160,9 @@ class _SignatureViewState extends State<SignatureView> {
   }
 
   bool _onPanEnd(Offset details) {
-    _points.add(null);
+    _points!.add(null);
     if (widget.onSigned != null) {
-      widget.onSigned(OffsetUtil.convertListOffsetToString(_points));
+      widget.onSigned!(OffsetUtil.convertListOffsetToString(_points));
     }
 
     return true;

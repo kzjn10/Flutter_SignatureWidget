@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SignatureView _signatureView;
+  late SignatureView _signatureView;
   var _value;
 
   @override
@@ -90,12 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _clear,
         tooltip: 'Clear',
-        child: Icon(Icons.add),
+        child: Icon(Icons.clear),
       ),
     );
   }
 
   _clear() {
-    _signatureView?.clear();
+    _signatureView.clear();
   }
 }

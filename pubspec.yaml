@@ -1,16 +1,18 @@
 name: signatureview
 description: Signature widget
 
+publish_to: none
+
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.4
   flutter_signature_view:
     path: flutter_signature_view
 
