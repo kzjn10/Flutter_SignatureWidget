@@ -7,11 +7,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Demo Signature View',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Demo'),
     );
   }
 }
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ..strokeCap = StrokeCap.round
         ..strokeWidth = 5.0,
       onSigned: (data) {
-        print("On change $data");
+        print("On change: $data");
       },
     );
 
