@@ -1,3 +1,7 @@
+## [2.0.0]
+
+* Support null-safety
+
 ## [1.1.1]
 
 * Support export to base64 String
