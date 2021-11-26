@@ -7,17 +7,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Demo Signature View',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Demo '),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  SignatureView _signatureView;
+  late SignatureView _signatureView;
   var _value;
 
   @override
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ..strokeCap = StrokeCap.round
         ..strokeWidth = 5.0,
       onSigned: (data) {
-        print("On change $data");
+        print("On change: $data");
       },
     );
 
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   _signatureView.exportBytes().then((value) {
                     setState(() {
                       _value = value;
-                      print("value: $value");
+                      print("Value: $value");
                     });
                   });
 
@@ -90,12 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _clear,
         tooltip: 'Clear',
-        child: Icon(Icons.add),
+        child: Icon(Icons.clear),
       ),
     );
   }
 
   _clear() {
-    _signatureView?.clear();
+    _signatureView.clear();
   }
 }
