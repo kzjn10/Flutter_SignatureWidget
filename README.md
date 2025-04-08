@@ -1,3 +1,5 @@
+#### ⛔️ The package is no longer maintained; please consider using an alternative package instead. ⛔️
+
 ## Signature Widget library
 
 Signature widget library
